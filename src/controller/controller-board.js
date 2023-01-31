@@ -8,7 +8,6 @@ export default class ControllerBoard {
     this.#initBoardLink();
     const paths = [];
     this.searchPathDfs({x: 0, y: 0}, {x: 7, y: 4}, paths);
-    for (let i = 0; i < paths.length; ++i) console.log(paths[i]);
   }
 
   #initBoard() {
@@ -44,6 +43,36 @@ export default class ControllerBoard {
     }
   }
 
+  #validInput(position) {
+    return position && (position.x >= 0 && position.x < this.boardSize);
+  }
+
+  searchPathBfs(source, destination, paths = []) {
+    if (!this.#validInput(source) || !this.#validInput(destination)) return;
+    const visited = new Set();
+    const node = this.matrix[source.x][source.y];
+
+    const queue = [[ node, [] ]];
+
+    while (queue.length > 0) {
+      const [ current, [...path]] = queue.shift();
+      const position = current.getPosition;
+      path.push(position);
+      
+      if (destination.x === position.x && destination.y === position.y) {
+        path.forEach(element => {
+          paths.push(element);
+        });
+        return;
+      }
+      
+      if (!visited.has(current)) {
+        queue.push(...current.getVertexEdges.map(edge => [ edge, path ]));
+      }
+      visited.add(current);
+    }    
+  }
+
   searchPathDfs(source, destination, paths = [], visited = new Set()) {
     const node = this.matrix[source.x][source.y];
     const destNode = this.matrix[destination.x][destination.y];
@@ -52,7 +81,7 @@ export default class ControllerBoard {
     }
 
     // Add node to path
-    paths.push(node);
+    paths.push(node.getPosition);
     if (!visited.has(node)) visited.add(node);
 
     const edges = node.getVertexEdges;
@@ -69,7 +98,7 @@ export default class ControllerBoard {
 
       if (destination.x === position.x && destination.y === position.y) {
         visited.add(edge);
-        paths.push(edge);
+        paths.push(edge.getPosition);
         return;
       }
 

@@ -155,7 +155,7 @@ main {
   justify-content: center;
 }
 
-main > button {
+.grid-button {
   width: 120px;
   height: 120px;
 }
