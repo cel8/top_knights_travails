@@ -41,17 +41,23 @@ export default class UiController {
     this.algorithm = graphFirstSearch.bfs;
   }
 
+  #cleanUpBoard() {
+    this.stepPhase = phases.phaseRest;
+    this.#setPosition();
+    this.btnRandomKnight.disabled = false;
+    this.#doCreateHome();
+  }
+
   #doLoadHeader() {
     const header  = document.querySelector('header');
     
-    DomManager.addNodeChild(header, ButtonManager.createImageButton('home-outline.svg', 'header-button', () => {
-      this.stepPhase = phases.phaseRest;
-      this.#setPosition();
-      this.btnRandomKnight.disabled = false;
-      this.#doCreateHome();
-    }));
+    DomManager.addNodeChild(header, ButtonManager.createImageButton('home-outline.svg', 'header-button', () => this.#cleanUpBoard()));
     
     this.btnRandomKnight = ButtonManager.createTextButton('random knight', 'header-button', () => {
+      if (this.stepPhase === phases.phaseComplete) {
+        this.#cleanUpBoard();
+      }
+
       if (this.stepPhase === phases.phaseRest) {
         const getRandomPosition = () => Math.floor(Math.random() * boardSize);
         const rndPosition = {
@@ -137,7 +143,10 @@ export default class UiController {
     const { target } = e;
     const x = +target.dataset.x;
     const y = +target.dataset.y;
-
+    if (this.stepPhase === phases.phaseComplete) {
+      this.#cleanUpBoard();
+    }
+    
     switch (this.stepPhase) {
       case phases.phaseRest:
         this.#setPosition(x, y);
@@ -164,6 +173,7 @@ export default class UiController {
             if (iterator === paths.length - 1) {
               clearInterval(timer);
               this.stepPhase = phases.phaseComplete;
+              this.btnRandomKnight.disabled = false;
             }
           }, 500);
         }        
