@@ -150,9 +150,124 @@ input:checked + .slider:before {
 }
 
 /* main content */
+
 main {
   gap: 0.3rem;
   justify-content: center;
+}
+
+.wrapper {
+  border: 49px solid #462921;
+  width: 560px;
+  margin: 0 auto;
+  display: grid;
+  grid-gap: 0;
+  grid-template-columns: 40px repeat(8, 70px) 40px;
+  grid-template-rows: 40px repeat(8, 70px) 40px;
+  grid-auto-flow: row;
+}
+
+.wrapper-row-inner,
+.wrapper-column-inner {
+  display: grid;
+  grid-gap: 0;
+  grid-auto-flow: row;
+  align-items: strech;
+}
+
+.wrapper-row-inner {
+  grid-template-columns: auto;
+  grid-template-rows: repeat(8, auto);
+}
+
+.wrapper-column-inner {
+  grid-template-columns: repeat(8, auto);
+  grid-template-rows: auto;
+}
+  
+.box {
+  padding: 20px;
+  font-size: 150%;
+  background-color: #edeed1;
+  color: #000;
+  text-align: center;
+}
+
+.box-inner{
+  text-align: center;
+  align-self: center;
+}
+
+.top-header,
+.bottom-header,
+.right-header,
+.left-header,
+.top-left-header,
+.bottom-left-header,
+.top-right-header,
+.bottom-right-header {
+  display: grid;
+  align-items: stretch;
+  background-color: #7d694c;
+}
+
+.top-left-header,
+.bottom-left-header,
+.left-header {
+  grid-column-start: 1;
+  grid-column-end: 1;
+}
+
+.top-left-header,
+.top-right-header,
+.top-header {
+  grid-row-start: 1;
+  grid-row-end: 1;
+}
+
+.top-right-header,
+.bottom-right-header {
+  grid-column-start: 10;
+  grid-column-end: 11;
+}
+
+.bottom-left-header,
+.bottom-right-header {
+  grid-row-start: 10;
+  grid-row-end: 11;
+}
+
+.top-header,
+.bottom-header {
+  grid-column-start: 2;
+  grid-column-end: 10;
+}
+
+.left-header,
+.right-header {
+  grid-row-start: 2;
+  grid-row-end: 10;
+}
+
+.bottom-header {
+  grid-row-start: 10;
+  grid-row-end: 11;
+}
+
+.right-header {
+  grid-column-start: 10;
+  grid-column-end: 11;
+}
+  
+.box:nth-child(-2n+12),
+.box:nth-child(12) ~ button:nth-child(-2n+19),
+.box:nth-child(20) ~ button:nth-child(-2n+28), 
+.box:nth-child(28) ~ button:nth-child(-2n+35), 
+.box:nth-child(36) ~ button:nth-child(-2n+44), 
+.box:nth-child(44) ~ button:nth-child(-2n+51), 
+.box:nth-child(52) ~ button:nth-child(-2n+60), 
+.box:nth-child(60) ~ button:nth-child(-2n+67) {
+  background-color: #779952;
 }
 
 .grid-button {

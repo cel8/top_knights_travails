@@ -92,16 +92,38 @@ export default class UiController {
 
   #doCreateHome() {
     DomManager.removeAllChildNodes(main);
-    main.style.display = 'grid';
-    main.style.gridTemplateColumns = `repeat(${boardSize}, 0fr)`;
-    main.style.gridTemplateRows = `repeat(${boardSize}, 1fr)`;
+    const divWrapper = DomManager.createAddNode('div', main, 'wrapper');
+    DomManager.createAddNode('div', divWrapper, 'top-left-header');
+    const divTop = DomManager.createAddNode('div', divWrapper, 'top-header');
+    const divTopWrapper = DomManager.createAddNode('div', divTop, 'wrapper-column-inner');
+    for (let i = 0; i < boardSize; ++i) {
+      DomManager.createAddNode('div', divTopWrapper, 'box-inner', null, String.fromCharCode(65 + i));
+    }
+    DomManager.createAddNode('div', divWrapper, 'top-right-header');
+    const divLeft = DomManager.createAddNode('div', divWrapper, 'left-header');
+    const divLeftWrapper = DomManager.createAddNode('div', divLeft, 'wrapper-row-inner');
+    for (let i = 0; i < boardSize; ++i) {
+      DomManager.createAddNode('div', divLeftWrapper, 'box-inner', null, 1 + i);
+    }
     for (let i = 0; i < boardSize; ++i) {
       for (let j = 0; j < boardSize; ++j) {
-        const grid = ButtonManager.createButton('', null, 'grid-button', (e) => this.#onCellClick(e));
+        const grid = ButtonManager.createButton('', null, 'box', (e) => this.#onCellClick(e));
         grid.dataset.x = i;
         grid.dataset.y = j;
-        DomManager.addNodeChild(main, grid);
+        DomManager.addNodeChild(divWrapper, grid);
       }
+    }
+    DomManager.createAddNode('div', divWrapper, 'bottom-left-header');
+    const divBottom = DomManager.createAddNode('div', divWrapper, 'bottom-header');
+    const divBottomWrapper = DomManager.createAddNode('div', divBottom, 'wrapper-column-inner');
+    for (let i = 0; i < boardSize; ++i) {
+      DomManager.createAddNode('div', divBottomWrapper, 'box-inner', null, String.fromCharCode(65 + i));
+    }
+    DomManager.createAddNode('div', divWrapper, 'bottom-right-header');
+    const divRight = DomManager.createAddNode('div', divWrapper, 'right-header');
+    const divRightWrapper = DomManager.createAddNode('div', divRight, 'wrapper-row-inner');
+    for (let i = 0; i < boardSize; ++i) {
+      DomManager.createAddNode('div', divRightWrapper, 'box-inner', null, 1 + i);
     }
   }
 
@@ -146,7 +168,7 @@ export default class UiController {
     if (this.stepPhase === phases.phaseComplete) {
       this.#cleanUpBoard();
     }
-    
+
     switch (this.stepPhase) {
       case phases.phaseRest:
         this.#setPosition(x, y);
