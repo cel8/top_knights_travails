@@ -62,7 +62,7 @@ export default class UiController {
     
     DomManager.addNodeChild(header, ButtonManager.createImageButton('home-outline.svg', 'header-button', () => this.#cleanUpBoard()));
     
-    this.btnRandomKnight = ButtonManager.createTextButton('random knight', 'header-button', () => {
+    this.btnRandomKnight = ButtonManager.createTextButton('random knight', 'header-bar-button', () => {
       if (this.stepPhase === phases.phaseComplete) {
         this.#cleanUpBoard();
       }
@@ -81,7 +81,7 @@ export default class UiController {
     });
     DomManager.addNodeChild(header, this.btnRandomKnight);
 
-    const btn = ButtonManager.createTextButton(this.algorithm, 'header-button', () => {
+    const btn = ButtonManager.createTextButton(this.algorithm, 'header-bar-button', () => {
       if (this.algorithm === graphFirstSearch.bfs) this.algorithm = graphFirstSearch.dfs;
       else this.algorithm = graphFirstSearch.bfs;
 

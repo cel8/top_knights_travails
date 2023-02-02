@@ -149,6 +149,71 @@ input:checked + .slider:before {
   border-radius: 50%;
 }
 
+/* Icon */
+
+.icon {
+  width: 2rem;
+}
+
+.header-button {
+  border: none;
+  background-color: var(--color-primary-bg);
+}
+
+.header-button       > p {
+  font-weight: bold;
+  color: var(--color-primary-text);
+}
+
+.header-button       > img  {
+  filter: var(--icon-filter) drop-shadow(1px 2px 0 var(--color-shadow));
+}
+
+.header-button:enabled       > p {
+  filter: brightness(90%);
+}
+
+.header-button:hover:enabled       > img  {
+  filter: var(--icon-filter) brightness(90%) drop-shadow(1px 2px 0 var(--color-shadow));
+}
+
+.header-button:active:enabled       > p {
+  transform: translateY(4px) translateX(2px);
+  filter: brightness(90%);
+}
+
+.header-button:active:enabled       > img {
+  transform: translateY(4px) translateX(2px);
+  filter: var(--icon-filter) brightness(90%) drop-shadow(1px 1px 0 var(--color-shadow));
+}
+
+.header-bar-button {
+  width: 155px;
+}
+
+.header-bar-button > p {
+  margin: 0.3rem;
+  font-weight: bold;
+}
+
+/* Header */
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+header > :first-child {
+  margin-right: auto;
+}
+
+header > :last-child {
+  margin-left: auto;
+}
+
 /* main content */
 
 main {
@@ -187,16 +252,36 @@ main {
 }
   
 .box {
-  padding: 20px;
-  font-size: 150%;
+  font-size: 120%;
   background-color: #edeed1;
-  color: #000;
   text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #000;
+}
+
+.box > .icon {
+  width: inherit;
+}
+
+.box > p {
+  color: #fff;
+  background-color: #000;
+  border-radius: 50%;
+  margin: 0rem;
+  padding: 0.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
 }
 
 .box-inner {
   text-align: center;
   align-self: center;
+  color: #fff;
 }
 
 .top-header,
@@ -259,7 +344,31 @@ main {
   grid-column-start: 10;
   grid-column-end: 11;
 }
-  
+
+.right-header,
+.top-right-header,
+.bottom-right-header {
+  border-right: 1px solid #000;
+}
+
+.top-header,
+.top-left-header,
+.top-right-header {
+  border-top: 1px solid #000;
+}
+
+.left-header,
+.top-left-header,
+.bottom-left-header {
+  border-left: 1px solid #000;
+}
+
+.bottom-header,
+.bottom-left-header,
+.bottom-right-header {
+  border-bottom: 1px solid #000;
+}
+
 .box:nth-child(-2n+12),
 .box:nth-child(12) ~ button:nth-child(-2n+19),
 .box:nth-child(20) ~ button:nth-child(-2n+28), 
