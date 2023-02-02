@@ -16,7 +16,7 @@ export default class ButtonManager {
     return btn;  
   }
 
-  static editButtonText(btn, text = '') { // TODO: da inserire nel template
+  static editButtonText(btn, text = '') {
     const btnText = btn.querySelector('p');
     if(btnText) {
       /* Remove or edit text */

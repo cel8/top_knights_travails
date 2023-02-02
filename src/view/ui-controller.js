@@ -39,9 +39,18 @@ export default class UiController {
     this.stepPhase = phases.phaseRest;
     this.btnRandomKnight = null;
     this.algorithm = graphFirstSearch.bfs;
+    this.updateChessBoardTimer = -1;
+  }
+
+  #stopUpdateChess() {
+    if (this.updateChessBoardTimer !== -1) {
+      clearInterval(this.updateChessBoardTimer);
+      this.updateChessBoardTimer = -1;
+    }
   }
 
   #cleanUpBoard() {
+    this.#stopUpdateChess();
     this.stepPhase = phases.phaseRest;
     this.#setPosition();
     this.btnRandomKnight.disabled = false;
@@ -128,11 +137,15 @@ export default class UiController {
   }
 
   static #setKnight(x, y) {
+    if (Number.isNaN(+x) || Number.isNaN(+y)) return;
+    if ((x > boardSize) || (y > boardSize)) return;
     const target = main.querySelector(`[data-x='${x}'][data-y='${y}']`);
     ButtonManager.editButtonImage(target, 'chess-knight.svg');
   }
 
   static #setMoveStep(x, y, step) {
+    if (Number.isNaN(+x) || Number.isNaN(+y)) return;
+    if ((x > boardSize) || (y > boardSize)) return;
     const target = main.querySelector(`[data-x='${x}'][data-y='${y}']`);
     ButtonManager.editButtonText(target, step.toString(10));
     ButtonManager.editButtonImage(target);
@@ -163,8 +176,11 @@ export default class UiController {
   #onCellClick(e) {
     const paths = [];
     const { target } = e;
-    const x = +target.dataset.x;
-    const y = +target.dataset.y;
+    if (this.updateChessBoardTimer !== -1) return;
+    const dataset = (target.nodeName.toLowerCase() === 'button') ? target.dataset
+      : target.parentNode.dataset;
+    const x = +dataset.x;
+    const y = +dataset.y;
     if (this.stepPhase === phases.phaseComplete) {
       this.#cleanUpBoard();
     }
@@ -186,14 +202,14 @@ export default class UiController {
         
         if (paths.length >= 2) {
           let iterator = 0;
-          const timer = setInterval(() => {
+          this.updateChessBoardTimer = setInterval(() => {
             const step = paths[iterator];
             const knightStep = paths[iterator + 1];
             UiController.#setMoveStep(step.x, step.y, iterator + 1);
             UiController.#setKnight(knightStep.x, knightStep.y);
             iterator++;
             if (iterator === paths.length - 1) {
-              clearInterval(timer);
+              this.#stopUpdateChess();
               this.stepPhase = phases.phaseComplete;
               this.btnRandomKnight.disabled = false;
             }
@@ -203,7 +219,6 @@ export default class UiController {
       default:
         break;
     }
-
   }
 
   #doLoadMainContent() {
