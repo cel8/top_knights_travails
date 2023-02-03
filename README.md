@@ -1,7 +1,4 @@
 # top_knights_travails
-%%description%% part of <a href="src-page-link">The Odin Project assignment</a>.
+Graph search traversal part of <a href="https://www.theodinproject.com/lessons/javascript-knights-travails">The Odin Project assignment</a>.
 
-Learning:
-- %%learn%%
-
-Live demo <a href="dst-page-link">here</a>.
+Live demo <a href="https://cel8.github.io/top_knights_travails/">here</a>.

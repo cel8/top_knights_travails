@@ -15,7 +15,7 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
-      title: 'WebPage Title',
+      title: 'Knight Travails',
       template: './src/index.html',
       favicon: './src/assets/icon/site.ico',
       inject: 'body',
